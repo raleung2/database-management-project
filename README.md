@@ -1,2 +1,2 @@
-# database-management-project
-cs623 dbms programming project
+# Database Management Project
+CS623 DBMS Programming Project
