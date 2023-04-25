@@ -1,6 +1,7 @@
 import psycopg2
 from tabulate import tabulate
 
+#create tables
 print("Beginning of create-tables.py")
 
 conn = psycopg2.connect(

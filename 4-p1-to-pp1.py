@@ -25,10 +25,10 @@ try:
   curr = conn.cursor()
 
   #update product name in product table
-  curr.execute("UPDATE Product SET pname = 'pp1' WHERE prod = 'p1';")
+  curr.execute("UPDATE Product SET prod = 'pp1' WHERE prod = 'p1';")
 
   #update product name in stock table
-  curr.execute("UPDATE Stock SET pname = 'pp1' WHERE prod = 'p1';") #this part does not make sense******
+  curr.execute("UPDATE Stock SET prod = 'pp1' WHERE prod = 'p1';") 
 except (Exception, psycopg2.DatabaseError) as err:
     print(err)
     print("Transactions incomplete- database rollback")
