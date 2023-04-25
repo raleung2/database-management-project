@@ -6,9 +6,9 @@ print("Beginning of pk-fk.py")
 
 conn = psycopg2.connect(
     host = "localhost",
-    port = "8200",
+    #port = "8200",
     database = "cs623progproj",
-    user = "raffertyleung",
+    user = "postgres",
     password = "postgres"
 )
 
@@ -30,13 +30,14 @@ try:
   #add pk to depot table
   curr.execute('ALTER TABLE Depot ADD CONSTRAINT pk_depot_dep PRIMARY KEY (dep);')
 
-  #add pk to stock table
-  curr.execute('ALTER TABLE Stock ADD CONSTRAINT pk_stock_prod PRIMARY KEY (prod);')
-  curr.execute('ALTER TABLE Stock ADD CONSTRAINT pk_stock_dep PRIMARY KEY (dep);')
+  #add keys to stock table
+  curr.execute('ALTER TABLE Stock ADD CONSTRAINT pk_stock_dep_prod PRIMARY KEY (dep, prod);')
 
   #add fks
-  curr.execute('ALTER TABLE Stock ADD CONSTRAINT fk_prod FOREIGN KEY (prod) REFERENCES Product (prod);')
+  curr.execute('ALTER TABLE Stock ADD CONSTRAINT fk_prod FOREIGN KEY (prod) REFERENCES Product (prod) ON DELETE CASCADE ON UPDATE CASCADE;')
   curr.execute('ALTER TABLE Stock ADD CONSTRAINT fk_dep FOREIGN KEY (dep) REFERENCES Depot (dep);')
+
+
 except (Exception, psycopg2.DatabaseError) as err:
     print(err)
     print("Transactions incomplete- database rollback")
@@ -44,7 +45,6 @@ except (Exception, psycopg2.DatabaseError) as err:
 finally:
     if conn:
         conn.commit()
-        print("Fks and Pks committed")
         curr.close()
         conn.close()
         print("PSQL connection is now closed")

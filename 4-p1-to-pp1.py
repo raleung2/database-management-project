@@ -6,9 +6,9 @@ print("Beginning of pk-fk.py")
 
 conn = psycopg2.connect(
     host = "localhost",
-    port = "8200",
+    #port = "8200",
     database = "cs623progproj",
-    user = "raffertyleung",
+    user = "postgres",
     password = "postgres"
 )
 
@@ -36,7 +36,6 @@ except (Exception, psycopg2.DatabaseError) as err:
 finally:
     if conn:
         conn.commit()
-        print("p1 to pp1 change made")
         curr.close()
         conn.close()
         print("PSQL connection is now closed")

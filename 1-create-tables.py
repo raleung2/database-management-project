@@ -6,9 +6,9 @@ print("Beginning of create-tables.py")
 
 conn = psycopg2.connect(
     host = "localhost",
-    port = "8200",
+    #port = "8200",
     database = "cs623progproj",
-    user = "raffertyleung",
+    user = "postgres",
     password = "postgres"
 )
 
@@ -25,21 +25,21 @@ try:
     curr = conn.cursor()
     create_product_table = '''
     CREATE TABLE Product (
-      prod CHAR(2),
+      prod VARCHAR(3),
       pname VARCHAR(30),
       price DECIMAL
     );
     '''
     create_depot_table = '''
     CREATE TABLE Depot (
-      dep CHAR(2),
+      dep VARCHAR(3),
       addr VARCHAR(255),
       volume INTEGER
     );
     '''
     create_stock_table = '''
     CREATE TABLE Stock(
-      prod CHAR(2),
+      prod VARCHAR(3),
       dep CHAR(2),
       quantity INTEGER
     );
@@ -55,7 +55,6 @@ except (Exception, psycopg2.DatabaseError) as err:
 finally:
     if conn:
         conn.commit()
-        print("Table creation committed")
         curr.close()
         conn.close()
         print("PSQL connection is now closed")

@@ -6,9 +6,9 @@ print("Beginning of create-tables.py")
 
 conn = psycopg2.connect(
     host = "localhost",
-    port = "8200",
+    #port = "8200",
     database = "cs623progproj",
-    user = "raffertyleung",
+    user = "postgres",
     password = "postgres"
 )
 
@@ -64,6 +64,7 @@ try:
     curr.executemany(insert_product_table_query, insert_product_values)
     curr.executemany(insert_depot_table_query, insert_depot_values)
     curr.executemany(insert_stock_table_query, insert_stock_values)
+
 except (Exception, psycopg2.DatabaseError) as err:
     print(err)
     print("Transactions incomplete- database rollback")
@@ -71,7 +72,6 @@ except (Exception, psycopg2.DatabaseError) as err:
 finally:
     if conn:
         conn.commit()
-        print("Table values committed")
         curr.close()
         conn.close()
         print("PSQL connection is now closed")
